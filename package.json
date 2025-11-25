@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "### Sobre",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
     "build": "tsc",
@@ -24,7 +23,6 @@
     "pg": "^8.16.3"
   },
   "devDependencies": {
-    "@prisma/sdk": "^3.15.2",
     "@types/express": "^5.0.5",
     "@types/node": "^24.10.1",
     "@types/pg": "^8.15.6",
