@@ -12,5 +12,35 @@ export class CarsService {
     return prisma.car.findMany({ where });
   }
 
-  // getById, update, delete...
+  async getById(id: number) {
+    const car = await prisma.car.findUnique({ where: { id } });
+    if (!car) {
+      const err: any = new Error("Car not found");
+      err.statusCode = 404;
+      throw err;
+    }
+    return car;
+  }
+
+  async update(id: number, data: Partial<{ plate: string; color: string; brand: string }>) {
+    const exists = await prisma.car.findUnique({ where: { id } });
+    if (!exists) {
+      const err: any = new Error("Car not found");
+      err.statusCode = 404;
+      throw err;
+    }
+
+    return prisma.car.update({ where: { id }, data });
+  }
+
+  async delete(id: number) {
+    const exists = await prisma.car.findUnique({ where: { id } });
+    if (!exists) {
+      const err: any = new Error("Car not found");
+      err.statusCode = 404;
+      throw err;
+    }
+    await prisma.car.delete({ where: { id } });
+    return { deleted: true };
+  }
 }
