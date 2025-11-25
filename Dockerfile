@@ -1,13 +1,17 @@
 FROM node:20-slim
 
+ENV NODE_ENV=development
 WORKDIR /usr/src/app
 
-COPY package*.json ./
+RUN apt-get update -y && \
+    apt-get install -y openssl && \
+    rm -rf /var/lib/apt/lists/*
 
+COPY package*.json ./
 RUN npm install
 
 COPY . .
 
-EXPOSE 3000
+RUN npx prisma generate
 
-CMD ["npm", "start"]
+EXPOSE 3000
