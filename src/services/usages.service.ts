@@ -1,15 +1,13 @@
 import { prisma } from "../config/database";
 
 export class UsagesService {
-  async startUsage({ carId, driverId, startAt, reason }) {
+  async startUsage({ carId, driverId, startAt, reason } : { carId: number, driverId:number, startAt: Date, reason: string }) {
     return prisma.$transaction(async (tx) => {
-      // check car active usage
       const carActive = await tx.usage.findFirst({
         where: { carId, endAt: null }
       });
       if (carActive) throw new Error("Car already in use");
 
-      // check driver active usage
       const driverActive = await tx.usage.findFirst({
         where: { driverId, endAt: null }
       });
@@ -24,7 +22,6 @@ export class UsagesService {
   }
 
   async endUsage(usageId: number, endAt: string) {
-    // set endAt only if currently null
     return prisma.usage.updateMany({
       where: { id: usageId, endAt: null },
       data: { endAt: new Date(endAt) },
