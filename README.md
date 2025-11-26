@@ -103,7 +103,7 @@ prisma/
 # palito 1 :)
 git clone https://github.com/seu-repo/fleet-control.git
 # palito 2 :)
-npm run deploy:local
+cd fleet-control && npm run deploy:local
 ```
 
 ## ▶ **Rodando localmente**
